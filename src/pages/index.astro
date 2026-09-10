@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import StatStrip from '../components/sections/StatStrip.astro';
+import Why from '../components/sections/Why.astro';
+import Rooms from '../components/sections/Rooms.astro';
+import Gallery from '../components/sections/Gallery.astro';
+import Included from '../components/sections/Included.astro';
+import Location from '../components/sections/Location.astro';
+import FaqRules from '../components/sections/FaqRules.astro';
+import Contact from '../components/sections/Contact.astro';
+
+const title = 'Hammer Boarding House | Student Boarding House Near UNILUS';
+const description =
+  'Affordable student boarding house minutes from UNILUS. Furnished rooms from K2,000 to K3,000 shared by two students, with Wi-Fi, security, garbage collection and electricity included. Enquire on WhatsApp.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Hero />
+  <StatStrip />
+  <Why />
+  <Rooms />
+  <Gallery />
+  <Included />
+  <Location />
+  <FaqRules />
+  <Contact />
+</BaseLayout>

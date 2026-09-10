@@ -1,0 +1,60 @@
+---
+import { Image } from 'astro:assets';
+import { getSlotImage } from '../data/images';
+import { site } from '../data/site';
+
+interface Props {
+  /** Rendered height of the mark, in rem. */
+  height?: number;
+  /** Show the wordmark next to the mark. Always shown when there is no logo file. */
+  showText?: boolean;
+  tone?: 'dark' | 'light';
+  class?: string;
+}
+
+const { height = 2.5, showText = true, tone = 'dark', class: className = '' } = Astro.props;
+const logo = getSlotImage('logo');
+---
+
+<span
+  class:list={['logo', `logo--${tone}`, className]}
+  style={`--logo-height: ${height}rem;`}
+>
+  {logo && <Image src={logo} alt="" widths={[96, 192, 288]} sizes="192px" class="logo__mark" />}
+  {(showText || !logo) && <span class="logo__text">{site.name}</span>}
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    text-decoration: none;
+  }
+
+  .logo__mark {
+    height: var(--logo-height);
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* Stitch: headline-md wordmark in the terracotta primary, tracking-tight. */
+  .logo__text {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    color: var(--color-primary);
+    white-space: nowrap;
+  }
+
+  @media (min-width: 768px) {
+    .logo__text {
+      font-size: var(--text-headline-md);
+    }
+  }
+
+  .logo--light .logo__text {
+    color: var(--color-on-primary);
+  }
+</style>

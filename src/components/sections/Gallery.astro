@@ -1,0 +1,115 @@
+---
+import SectionHeading from '../SectionHeading.astro';
+import Photo from '../Photo.astro';
+import { getGalleryImages } from '../../data/images';
+
+const gallery = getGalleryImages();
+
+// Bento spans, cycled across however many photos exist. Index 0 gets the
+// large tile, so the grid stays interesting at any count. The cycle costs
+// 8 cells across a 4-column grid, so it tiles without gaps; `grid-auto-flow:
+// dense` backfills any hole left by a partial final cycle.
+const spans = ['wide-tall', '', '', 'wide', '', '', 'wide', ''];
+
+// Until real photos land, show a preview of the layout rather than an empty
+// grid. Four tiles complete one bento block exactly (2x2 + 1 + 1 + 2x1).
+const placeholderCount = 4;
+---
+
+<section class="section" id="gallery" aria-labelledby="gallery-heading">
+  <div class="container">
+    <SectionHeading
+      eyebrow="Gallery"
+      title="Life at Hammer Boarding House"
+      lead="Photographs of the property are being arranged and will appear here."
+      id="gallery-heading"
+    />
+
+    <div class="gallery">
+      {
+        gallery.length > 0
+          ? gallery.map((entry, index) => (
+              <div class:list={['gallery__item', spans[index % spans.length] && `gallery__item--${spans[index % spans.length]}`]}>
+                <Photo
+                  image={entry.image}
+                  alt={entry.alt}
+                  ratio="3/2"
+                  radius="lg"
+                  sizes="(min-width: 900px) 50vw, 100vw"
+                  class="gallery__photo"
+                />
+              </div>
+            ))
+          : Array.from({ length: placeholderCount }).map((_, index) => (
+              <div class:list={['gallery__item', spans[index % spans.length] && `gallery__item--${spans[index % spans.length]}`]}>
+                <Photo
+                  alt="Photograph of Hammer Boarding House coming soon"
+                  ratio="3/2"
+                  radius="lg"
+                  class="gallery__photo"
+                />
+              </div>
+            ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery {
+    display: grid;
+    gap: var(--gutter);
+    grid-template-columns: 1fr;
+  }
+
+  .gallery__item {
+    min-height: 0;
+  }
+
+  .gallery__photo {
+    height: 100%;
+  }
+
+  @media (min-width: 700px) {
+    .gallery {
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 240px;
+      grid-auto-flow: dense;
+    }
+
+    /* The Photo component sets aspect-ratio; inside the bento grid the tile
+       height comes from the grid track instead. */
+    .gallery__item :global(.photo) {
+      aspect-ratio: auto;
+      height: 100%;
+    }
+
+    .gallery__item {
+      grid-column: span 2;
+    }
+
+    .gallery__item--wide-tall {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .gallery__item--wide {
+      grid-column: span 2;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .gallery__item {
+      grid-column: span 1;
+    }
+
+    .gallery__item--wide-tall {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .gallery__item--wide {
+      grid-column: span 2;
+    }
+  }
+</style>

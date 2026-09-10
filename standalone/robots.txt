@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hammer-boarding-house.vercel.app/sitemap.xml

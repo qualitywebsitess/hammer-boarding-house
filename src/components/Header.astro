@@ -1,0 +1,229 @@
+---
+import WhatsAppButton from './WhatsAppButton.astro';
+import Logo from './Logo.astro';
+
+const navLinks = [
+  { href: '#rooms', label: 'Rooms' },
+  { href: '#gallery', label: 'Gallery' },
+  { href: '#included', label: "What's Included" },
+  { href: '#location', label: 'Location' },
+  { href: '#faq', label: 'FAQ & Rules' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="#hero" class="site-header__brand">
+      <Logo height={2.5} />
+    </a>
+
+    <button
+      type="button"
+      class="nav-toggle"
+      id="nav-toggle"
+      aria-expanded="false"
+      aria-controls="site-nav"
+    >
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+      <span class="visually-hidden">Menu</span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul class="site-nav__list">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a href={link.href} class="site-nav__link label">
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <WhatsAppButton variant="general" label="WhatsApp" size="small" class="site-nav__cta" />
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('site-nav');
+
+  if (toggle && nav) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      document.body.classList.toggle('nav-open', open);
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    nav.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>
+
+<style>
+  /* Stitch: sticky, background/95 with a backdrop blur and a soft shadow. */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(251, 249, 248, 0.95);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: var(--header-height);
+  }
+
+  .site-header__brand {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+  }
+
+  .nav-toggle__bars,
+  .nav-toggle__bars::before,
+  .nav-toggle__bars::after {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .nav-toggle__bars::before,
+  .nav-toggle__bars::after {
+    content: '';
+    position: relative;
+  }
+
+  .nav-toggle__bars::before {
+    top: -6px;
+  }
+
+  .nav-toggle__bars::after {
+    top: 4px;
+  }
+
+  :global(body.nav-open) .nav-toggle__bars {
+    background: transparent;
+  }
+
+  :global(body.nav-open) .nav-toggle__bars::before {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  :global(body.nav-open) .nav-toggle__bars::after {
+    transform: translateY(-4px) rotate(-45deg);
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  :global(body.nav-open) .site-nav {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--margin-mobile) var(--space-6);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+  }
+
+  .site-nav__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .site-nav__link {
+    display: block;
+    padding: var(--space-3) var(--space-2);
+    color: var(--color-text-soft);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+  }
+
+  .site-nav__link:hover {
+    color: var(--color-primary);
+    background: var(--color-accent-soft);
+  }
+
+  .site-nav__cta {
+    margin-top: var(--space-2);
+  }
+
+  @media (min-width: 1000px) {
+    .nav-toggle {
+      display: none;
+    }
+
+    .site-nav,
+    :global(body.nav-open) .site-nav {
+      position: static;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-6);
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .site-nav__list {
+      flex-direction: row;
+      gap: var(--space-6);
+    }
+
+    .site-nav__link {
+      padding: var(--space-2) 0;
+      border-radius: 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .site-nav__link:hover {
+      background: transparent;
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    .site-nav__cta {
+      margin-top: 0;
+    }
+  }
+</style>

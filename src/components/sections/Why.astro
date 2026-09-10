@@ -1,0 +1,68 @@
+---
+import SectionHeading from '../SectionHeading.astro';
+import FeatureCard from '../FeatureCard.astro';
+import { site } from '../../data/site';
+
+const reasons = [
+  {
+    icon: 'wallet' as const,
+    title: 'Student budget friendly',
+    text: `Rooms range from ${site.currency}${site.priceMin.toLocaleString()} to ${site.currency}${site.priceMax.toLocaleString()}, with a ${site.deposit} deposit.`,
+  },
+  {
+    icon: 'shield' as const,
+    title: 'Security included',
+    text: 'Security is part of the rent, and the surrounding area is described as very secure.',
+  },
+  {
+    icon: 'walk' as const,
+    title: 'Close to campus',
+    text: 'Roughly a 3-minute walk to the UNILUS small gate, so you can walk to lectures.',
+  },
+  {
+    icon: 'bed' as const,
+    title: 'Furnished and ready',
+    text: 'Rooms come with beds, study tables and wardrobes — move in without buying furniture.',
+  },
+  {
+    icon: 'wifi' as const,
+    title: 'Wi-Fi and utilities',
+    text: 'Wi-Fi, electricity and garbage collection are all covered by your rent.',
+  },
+];
+---
+
+<section class="section" id="why" aria-labelledby="why-heading">
+  <div class="container">
+    <SectionHeading
+      eyebrow="Why Hammer Boarding House"
+      title="Built around what students actually need"
+      lead="Simple, honest student accommodation: a secure place to sleep, study and get to campus on time."
+      align="center"
+      id="why-heading"
+    />
+
+    <div class="why__grid">
+      {reasons.map((reason) => <FeatureCard {...reason} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .why__grid {
+    display: grid;
+    gap: var(--gutter);
+  }
+
+  @media (min-width: 600px) {
+    .why__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 960px) {
+    .why__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

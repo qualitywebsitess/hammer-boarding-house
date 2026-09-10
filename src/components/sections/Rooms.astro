@@ -1,0 +1,186 @@
+---
+import SectionHeading from '../SectionHeading.astro';
+import RoomCard from '../RoomCard.astro';
+import WhatsAppButton from '../WhatsAppButton.astro';
+import Icon from '../Icon.astro';
+import { site } from '../../data/site';
+---
+
+<section class="section section--surface" id="rooms" aria-labelledby="rooms-heading">
+  <div class="container">
+    <SectionHeading
+      eyebrow="Rooms & Pricing"
+      title="Furnished rooms, shared by two students"
+      lead="Every room is furnished and shared between two people, with the same rent inclusions across the property."
+      id="rooms-heading"
+    />
+
+    <div class="rooms__layout">
+      <div class="rooms__cards">
+        <RoomCard
+          imageSlot="room01"
+          title="Furnished as standard"
+          text="Rooms come ready to move into, so there is no need to buy or transport furniture."
+          facts={[
+            { icon: 'bed', label: 'Single board beds' },
+            { icon: 'desk', label: 'Study tables' },
+            { icon: 'wardrobe', label: 'Wardrobes' },
+          ]}
+        />
+        <RoomCard
+          imageSlot="room02"
+          title="Shared between two"
+          text="Each room is shared by two students, which is what keeps the rent affordable."
+          facts={[
+            { icon: 'users', label: `${site.occupancyPerRoom} students per room` },
+            { icon: 'wifi', label: 'Wi-Fi included' },
+            { icon: 'shield', label: 'Security included' },
+          ]}
+        />
+      </div>
+
+      <aside class="pricing card" aria-labelledby="pricing-heading">
+        <h3 id="pricing-heading" class="pricing__heading label">Pricing</h3>
+        <p class="pricing__range">
+          {site.currency}{site.priceMin.toLocaleString()} &ndash; {site.currency}{
+            site.priceMax.toLocaleString()
+          }
+        </p>
+        <p class="pricing__note">per room, depending on the room</p>
+
+        <dl class="pricing__list">
+          <div>
+            <dt>Deposit</dt>
+            <dd>{site.deposit}</dd>
+          </div>
+          <div>
+            <dt>Occupancy</dt>
+            <dd>{site.occupancyPerRoom} students per room</dd>
+          </div>
+          <div>
+            <dt>Booking</dt>
+            <dd>By phone</dd>
+          </div>
+          <div>
+            <dt>Check-in &amp; move-out</dt>
+            <dd>Flexible</dd>
+          </div>
+        </dl>
+
+        <div class="availability">
+          <span class="icon-chip icon-chip--sm" aria-hidden="true">
+            <Icon name="phone" />
+          </span>
+          <div>
+            <p class="availability__title">Contact us for current availability</p>
+            <p class="availability__text">
+              Availability changes through the year &mdash; message us and we&rsquo;ll confirm
+              what&rsquo;s open right now.
+            </p>
+          </div>
+        </div>
+
+        <WhatsAppButton variant="availability" label="Check availability" block />
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rooms__layout {
+    display: grid;
+    gap: var(--gutter);
+  }
+
+  .rooms__cards {
+    display: grid;
+    gap: var(--gutter);
+  }
+
+  @media (min-width: 600px) {
+    .rooms__cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .rooms__layout {
+      grid-template-columns: 1.9fr 1fr;
+      align-items: start;
+    }
+  }
+
+  .pricing {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-6);
+  }
+
+  .pricing__heading {
+    color: var(--color-text-subtle);
+  }
+
+  /* Stitch: price figures carry the primary terracotta. */
+  .pricing__range {
+    font-family: var(--font-display);
+    font-size: clamp(1.875rem, 5vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--color-primary);
+  }
+
+  .pricing__note {
+    margin-top: calc(var(--space-2) * -1);
+    font-size: 0.9375rem;
+    color: var(--color-text-soft);
+  }
+
+  .pricing__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-block: var(--space-2);
+    padding-block: var(--space-4);
+    border-block: 1px solid var(--color-border-soft);
+  }
+
+  .pricing__list > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .pricing__list dt {
+    font-size: 0.9375rem;
+    color: var(--color-text-soft);
+  }
+
+  .pricing__list dd {
+    margin: 0;
+    font-weight: 600;
+    text-align: right;
+  }
+
+  .availability {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-muted);
+  }
+
+  .availability__title {
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .availability__text {
+    margin-top: var(--space-1);
+    font-size: 0.875rem;
+    color: var(--color-text-soft);
+    line-height: 1.5;
+  }
+</style>

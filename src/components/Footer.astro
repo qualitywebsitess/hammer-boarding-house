@@ -1,0 +1,118 @@
+---
+import { site } from '../data/site';
+import WhatsAppButton from './WhatsAppButton.astro';
+import Logo from './Logo.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <Logo height={3} />
+      <p class="site-footer__tagline">
+        Student boarding house a short walk from UNILUS. Furnished rooms with Wi-Fi, security,
+        garbage collection and electricity included.
+      </p>
+      <WhatsAppButton variant="general" label="Chat on WhatsApp" size="small" />
+    </div>
+
+    <div class="site-footer__col">
+      <h2 class="site-footer__heading label">Explore</h2>
+      <ul class="site-footer__links">
+        <li><a href="#rooms">Rooms &amp; Pricing</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#included">What&rsquo;s Included</a></li>
+        <li><a href="#location">Location</a></li>
+        <li><a href="#faq">FAQ &amp; Rules</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="site-footer__col">
+      <h2 class="site-footer__heading label">Contact</h2>
+      <ul class="site-footer__links">
+        <li><a href={site.phoneHref}>{site.phoneDisplay}</a></li>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+      </ul>
+      <p class="site-footer__note">Rooms are booked by phone.</p>
+    </div>
+  </div>
+
+  <div class="container site-footer__base">
+    <p>&copy; {year} {site.name}. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  /* Stitch: flat surface-container-low footer, no shadow. */
+  .site-footer {
+    background: var(--color-surface-muted);
+    color: var(--color-text);
+    padding-top: var(--space-8);
+  }
+
+  .site-footer__inner {
+    display: grid;
+    gap: var(--space-7);
+    padding-bottom: var(--space-7);
+  }
+
+  @media (min-width: 768px) {
+    .site-footer__inner {
+      grid-template-columns: 1.7fr 1fr 1fr;
+      gap: var(--space-6);
+    }
+  }
+
+  .site-footer__brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+    max-width: 32rem;
+  }
+
+  .site-footer__tagline {
+    color: var(--color-text-soft);
+    line-height: 1.6;
+  }
+
+  .site-footer__heading {
+    color: var(--color-text-subtle);
+    margin-bottom: var(--space-4);
+  }
+
+  .site-footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  /* Padded so each link clears the 24px minimum target size on touch. */
+  .site-footer__links a {
+    display: inline-block;
+    padding-block: var(--space-2);
+    text-decoration: none;
+    color: var(--color-text-soft);
+  }
+
+  .site-footer__links a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .site-footer__note {
+    margin-top: var(--space-4);
+    font-size: 0.875rem;
+    color: var(--color-text-subtle);
+  }
+
+  .site-footer__base {
+    padding-block: var(--space-5);
+    border-top: 1px solid var(--color-border-soft);
+    font-size: 0.875rem;
+    color: var(--color-text-subtle);
+  }
+</style>

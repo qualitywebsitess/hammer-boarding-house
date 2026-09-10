@@ -1,0 +1,424 @@
+/* ==========================================================================
+   Hammer Boarding House — design system
+
+   Values below are the approved Google Stitch design ("Hammer Boarding House —
+   Landing Page"). Terracotta primary on a warm off-white ground, Inter
+   throughout. Token names are kept stable so components theme from here.
+   ========================================================================== */
+
+:root {
+  /* --- Surfaces (Stitch: background / surface-container-*) --------------- */
+  --color-bg: #fbf9f8;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f6f3f2;
+  --color-surface-dim: #f0eded;
+  --color-surface-high: #eae8e7;
+  --color-surface-highest: #e4e2e1;
+
+  /* Warm sand used for every empty image slot, so pending photography reads
+     as an intentional part of the design rather than a broken image. */
+  --color-placeholder: #eae5db;
+
+  --color-border: #ddc0ba;
+  --color-border-soft: rgba(221, 192, 186, 0.55);
+
+  /* --- Ink -------------------------------------------------------------- */
+  --color-text: #1b1c1c;
+  --color-text-soft: #56423e;
+  --color-text-subtle: #89726d;
+
+  /* --- Primary: terracotta ---------------------------------------------- */
+  --color-primary: #9f402d;
+  --color-primary-hover: #802918;
+  --color-on-primary: #ffffff;
+
+  /* Warm coral + blush, used only as fills, borders and hover states.
+     --color-accent-ink is the token to reach for when colour carries text. */
+  --color-accent: #e2725b;
+  --color-accent-soft: rgba(255, 218, 211, 0.55);
+  --color-accent-ink: #9f402d;
+  --color-plum: #5a0d02;
+
+  /* --- Supporting hues (Stitch secondary / tertiary) -------------------- */
+  --color-secondary: #006972;
+  --color-tertiary: #006d2f;
+
+  --color-whatsapp: #25d366;
+  --color-whatsapp-dark: #128c7e;
+  --color-on-whatsapp: #06301a;
+
+  /* --- Spacing (Stitch: xs 4 / sm 8 / md 16 / lg 24 / xl 32 / xxl 48) --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 5rem;
+  --space-9: 7.5rem;
+
+  --gutter: 24px;
+  --margin-mobile: 16px;
+  --margin-desktop: 64px;
+
+  /* --- Radius (Stitch: DEFAULT .25 / lg .5 / xl .75) -------------------- */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-pill: 999px;
+
+  /* --- Shadow (Stitch: shadow-ambient) ---------------------------------- */
+  --shadow-sm: 0 1px 2px rgba(27, 28, 28, 0.05);
+  --shadow-md: 0 4px 20px -2px rgba(0, 109, 119, 0.08);
+  --shadow-lg: 0 12px 32px -4px rgba(0, 109, 119, 0.14);
+
+  /* --- Type (Stitch scale, Inter throughout) ---------------------------- */
+  --font-display: 'Inter Variable', system-ui, sans-serif;
+  --font-body: 'Inter Variable', system-ui, sans-serif;
+
+  --text-caption: 0.75rem;
+  --text-label: 0.875rem;
+  --text-body: 1rem;
+  --text-body-lg: 1.125rem;
+  --text-headline-md: 1.5rem;
+  --text-headline-lg: 2rem;
+  --text-display: 3rem;
+
+  --header-height: 4.5rem;
+  --content-width: 1280px;
+}
+
+/* --- Reset ------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + var(--space-4));
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.5;
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #ffdad3;
+  color: var(--color-plum);
+}
+
+img,
+svg,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+/* --- Typography -------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+/* Stitch: headline-lg-mobile 28/36 → display 48/56 */
+h1 {
+  font-size: clamp(1.75rem, 5.5vw, var(--text-display));
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+/* Stitch: headline-lg 32/40 */
+h2 {
+  font-size: clamp(1.5rem, 4vw, var(--text-headline-lg));
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+
+/* Stitch: headline-md 24/32 */
+h3 {
+  font-size: var(--text-headline-md);
+  line-height: 1.33;
+  font-weight: 600;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* --- Layout ------------------------------------------------------------ */
+
+.container {
+  width: 100%;
+  max-width: var(--content-width);
+  margin-inline: auto;
+  padding-inline: var(--margin-mobile);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-inline: var(--margin-desktop);
+  }
+}
+
+.section {
+  padding-block: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-block: var(--space-9);
+  }
+}
+
+.section--muted {
+  background: var(--color-surface-muted);
+}
+
+.section--surface {
+  background: var(--color-surface);
+}
+
+/* --- Focus ------------------------------------------------------------- */
+
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: var(--space-4);
+  z-index: 100;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-radius: var(--radius-md);
+  transform: translateY(-200%);
+  transition: transform 0.15s ease;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* --- Label / eyebrow --------------------------------------------------- */
+
+/* Stitch label-md: 14px / 20px, 600, 0.05em tracking. */
+.label {
+  font-size: var(--text-label);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-accent-ink);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 3rem;
+  height: 1px;
+  background: currentColor;
+}
+
+.eyebrow--plain::before {
+  display: none;
+}
+
+.lead {
+  font-size: var(--text-body-lg);
+  line-height: 1.6;
+  color: var(--color-text-soft);
+}
+
+/* --- Buttons ----------------------------------------------------------- */
+
+/* Stitch: rounded-lg (8px), label-md, px-lg py-md, sentence case. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn--primary:hover {
+  background: var(--color-primary-hover);
+}
+
+/* Stitch "View Rooms": neutral surface-container-highest fill. */
+.btn--secondary {
+  background: var(--color-surface-highest);
+  color: var(--color-text);
+}
+
+.btn--secondary:hover {
+  background: var(--color-surface-high);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.btn--outline:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-surface);
+}
+
+/* Dark green ink on the resting state: white on #25d366 is only 2:1. */
+.btn--whatsapp {
+  background: var(--color-whatsapp);
+  color: var(--color-on-whatsapp);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn--whatsapp:hover {
+  background: var(--color-whatsapp-dark);
+  color: #fff;
+}
+
+.btn--small {
+  min-height: 42px;
+  padding: var(--space-2) var(--space-4);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn__icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+}
+
+/* --- Cards ------------------------------------------------------------- */
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+}
+
+/* --- Icon chip --------------------------------------------------------- */
+
+.icon-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-soft);
+  color: var(--color-plum);
+}
+
+.icon-chip--sm {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* Plain global stylesheet — `:global()` is not valid here and would
+   invalidate the whole selector list, so match the class directly. */
+.icon-chip--sm .icon {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/* --- Utilities --------------------------------------------------------- */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- Motion ------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

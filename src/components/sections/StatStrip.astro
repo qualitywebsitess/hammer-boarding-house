@@ -1,0 +1,100 @@
+---
+import Icon from '../Icon.astro';
+import { site } from '../../data/site';
+import type { IconName } from '../icons';
+
+// Every figure here is verified in CLIENT_REQUIREMENTS.md.
+const stats: { icon: IconName; value: string; label: string }[] = [
+  {
+    icon: 'users',
+    value: `${site.occupancyPerRoom} students`,
+    label: 'Per room',
+  },
+  {
+    icon: 'wallet',
+    value: `${site.currency}${site.priceMin.toLocaleString()}–${site.currency}${site.priceMax.toLocaleString()}`,
+    label: 'Room range',
+  },
+  {
+    icon: 'shield',
+    value: `${site.deposit} deposit`,
+    label: 'To secure a room',
+  },
+  {
+    icon: 'walk',
+    value: '~3 min',
+    label: 'Walk to UNILUS small gate',
+  },
+];
+---
+
+<section class="stat-strip" aria-label="At a glance">
+  <div class="container">
+    <ul class="stat-strip__card card">
+      {
+        stats.map((stat) => (
+          <li class="stat">
+            <span class="icon-chip" aria-hidden="true">
+              <Icon name={stat.icon} />
+            </span>
+            <span class="stat__value">{stat.value}</span>
+            <span class="stat__label">{stat.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .stat-strip {
+    padding-bottom: var(--space-7);
+  }
+
+  .stat-strip__card {
+    display: grid;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    background: var(--color-surface-muted);
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    text-align: center;
+  }
+
+  .stat__value {
+    font-family: var(--font-display);
+    font-size: var(--text-headline-md);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .stat__label {
+    font-size: 0.9375rem;
+    color: var(--color-text-soft);
+  }
+
+  @media (min-width: 600px) {
+    .stat-strip__card {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .stat-strip__card {
+      grid-template-columns: repeat(4, 1fr);
+      padding-block: var(--space-6);
+    }
+
+    .stat:not(:last-child) {
+      border-right: 1px solid var(--color-border-soft);
+    }
+  }
+</style>

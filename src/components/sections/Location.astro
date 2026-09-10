@@ -1,0 +1,153 @@
+---
+import SectionHeading from '../SectionHeading.astro';
+import Photo from '../Photo.astro';
+import Icon from '../Icon.astro';
+import WhatsAppButton from '../WhatsAppButton.astro';
+import { site } from '../../data/site';
+import { getSlotImage, imageSlots } from '../../data/images';
+import type { IconName } from '../icons';
+
+const distances: { icon: IconName; time: string; label: string; detail: string }[] = [
+  { icon: 'walk', time: '~3 min', label: 'To UNILUS', detail: 'Walk to the small gate' },
+  { icon: 'store', time: '~7 min', label: 'To the shops', detail: 'Walking distance' },
+  { icon: 'bus', time: '~7 min', label: 'To public transport', detail: 'Walking distance' },
+];
+
+const exteriorSlot = imageSlots.exterior;
+---
+
+<section class="section" id="location" aria-labelledby="location-heading">
+  <div class="container">
+    <SectionHeading
+      eyebrow="Location"
+      title="Close enough to walk to lectures"
+      lead="A short walk from campus, shops and transport, in an area the owners describe as very secure."
+      id="location-heading"
+    />
+
+    <div class="location__layout">
+      <div>
+        <ul class="location__distances">
+          {
+            distances.map((item) => (
+              <li class="location__distance card">
+                <span class="icon-chip" aria-hidden="true">
+                  <Icon name={item.icon} />
+                </span>
+                <span class="location__time">{item.time}</span>
+                <span class="location__label">{item.label}</span>
+                <span class="location__detail">{item.detail}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="location__nearby">
+          <h3 class="location__nearby-heading">Also nearby</h3>
+          <ul class="location__tags">
+            {site.nearby.map((item) => <li class="location__tag">{item}</li>)}
+          </ul>
+          <p class="location__note">
+            We share the exact address and directions directly with students who enquire.
+          </p>
+          <WhatsAppButton variant="general" label="Ask for directions" size="small" />
+        </div>
+      </div>
+
+      <div class="location__media">
+        <Photo
+          image={getSlotImage('exterior')}
+          alt={exteriorSlot.alt}
+          ratio={exteriorSlot.ratio}
+          radius="lg"
+          sizes="(min-width: 900px) 40vw, 100vw"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .location__layout {
+    display: grid;
+    gap: var(--space-7);
+    align-items: start;
+  }
+
+  .location__distances {
+    display: grid;
+    gap: var(--gutter);
+  }
+
+  @media (min-width: 560px) {
+    .location__distances {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .location__distance {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-5);
+  }
+
+  .location__distance .icon-chip {
+    margin-bottom: var(--space-3);
+  }
+
+  .location__time {
+    font-family: var(--font-display);
+    font-size: var(--text-headline-md);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .location__label {
+    font-weight: 600;
+  }
+
+  .location__detail {
+    font-size: 0.9375rem;
+    color: var(--color-text-soft);
+  }
+
+  .location__nearby {
+    margin-top: var(--space-6);
+  }
+
+  .location__nearby-heading {
+    font-size: 1.1875rem;
+    font-weight: 600;
+    margin-bottom: var(--space-3);
+  }
+
+  .location__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .location__tag {
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+    background: var(--color-accent-soft);
+    border: 1px solid var(--color-accent);
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+
+  .location__note {
+    margin-block: var(--space-4);
+    color: var(--color-text-soft);
+    max-width: 48ch;
+  }
+
+  @media (min-width: 900px) {
+    .location__layout {
+      grid-template-columns: 1.5fr 1fr;
+      gap: var(--space-8);
+    }
+  }
+</style>

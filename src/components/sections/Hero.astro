@@ -1,0 +1,171 @@
+---
+import WhatsAppButton from '../WhatsAppButton.astro';
+import Button from '../Button.astro';
+import Photo from '../Photo.astro';
+import Icon from '../Icon.astro';
+import { site } from '../../data/site';
+import { getSlotImage, imageSlots } from '../../data/images';
+import type { IconName } from '../icons';
+
+const heroSlot = imageSlots.hero;
+
+// Every chip below is verified in CLIENT_REQUIREMENTS.md.
+const highlights: { icon: IconName; label: string }[] = [
+  { icon: 'walk', label: '3 min walk to UNILUS' },
+  { icon: 'bed', label: 'Furnished rooms' },
+  { icon: 'wifi', label: 'Wi-Fi included' },
+  { icon: 'shield', label: 'Security' },
+];
+
+const priceRange = `${site.currency}${site.priceMin.toLocaleString()}–${site.currency}${site.priceMax.toLocaleString()}`;
+---
+
+<section class="hero" id="hero">
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <div class="hero__intro">
+        <h1>Comfortable student living, close to UNILUS</h1>
+
+        <p class="lead hero__lead">
+          Student-friendly accommodation roughly a 3-minute walk from the UNILUS small gate.
+          Furnished rooms from {priceRange}.
+        </p>
+      </div>
+
+      <div class="hero__actions">
+        <WhatsAppButton variant="booking" label="Chat on WhatsApp" />
+        <Button href="#rooms" variant="secondary">View rooms</Button>
+      </div>
+
+      <ul class="hero__highlights">
+        {
+          highlights.map((item) => (
+            <li class="hero__highlight">
+              <Icon name={item.icon} class="hero__highlight-icon" />
+              <span>{item.label}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="hero__note">
+        Prefer to talk? Call <a href={site.phoneHref}>{site.phoneDisplay}</a> &mdash; rooms are
+        booked by phone.
+      </p>
+    </div>
+
+    <div class="hero__media">
+      <Photo
+        image={getSlotImage('hero')}
+        alt={heroSlot.alt}
+        ratio={heroSlot.ratio}
+        radius="lg"
+        priority
+        sizes="(min-width: 1000px) 58vw, 100vw"
+        class="hero__photo"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background: var(--color-bg);
+    padding-block: var(--space-7);
+  }
+
+  .hero__inner {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+  }
+
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-6);
+  }
+
+  .hero__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .hero__lead {
+    max-width: 32rem;
+  }
+
+  /* Stitch: stacked and full-width on mobile, side by side from sm up. */
+  .hero__actions {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 480px) {
+    .hero__actions {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-self: auto;
+    }
+  }
+
+  /* Stitch: caption-sized chips with teal icons, wrapping under the CTAs. */
+  .hero__highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-5);
+  }
+
+  .hero__highlight {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-text-soft);
+    font-size: 0.875rem;
+  }
+
+  .hero__highlight-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: none;
+    color: var(--color-secondary);
+  }
+
+  .hero__note {
+    font-size: 0.9375rem;
+    color: var(--color-text-soft);
+  }
+
+  .hero__note a {
+    color: var(--color-accent-ink);
+    font-weight: 600;
+  }
+
+  .hero__media {
+    width: 100%;
+  }
+
+  .hero__photo {
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (min-width: 1000px) {
+    .hero {
+      padding-block: var(--space-8);
+    }
+
+    .hero__inner {
+      grid-template-columns: 5fr 7fr;
+      gap: var(--space-7);
+      min-height: 72vh;
+    }
+
+    .hero__content {
+      gap: var(--space-6);
+    }
+  }
+</style>

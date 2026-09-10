@@ -1,0 +1,207 @@
+---
+import SectionHeading from '../SectionHeading.astro';
+import WhatsAppButton from '../WhatsAppButton.astro';
+import Icon from '../Icon.astro';
+import { site } from '../../data/site';
+
+const steps = [
+  'Message us on WhatsApp or call — tell us your full name and the phone number linked to your WhatsApp.',
+  'We confirm current room availability and answer any questions.',
+  `Booking is finalised by phone, with a ${site.deposit} deposit.`,
+];
+---
+
+<section class="section contact" id="contact" aria-labelledby="contact-heading">
+  <div class="container">
+    <SectionHeading
+      eyebrow="Contact & Booking"
+      title="Ready to move in? Let's talk"
+      lead="Send us a message and we'll confirm availability and answer your questions. Rooms are booked by phone."
+      align="center"
+      id="contact-heading"
+    />
+
+    <div class="contact__cards">
+      <a class="contact-card card" href={site.phoneHref}>
+        <span class="icon-chip" aria-hidden="true"><Icon name="phone" /></span>
+        <span class="contact-card__label label">Call or WhatsApp</span>
+        <span class="contact-card__value">{site.phoneDisplay}</span>
+        <span class="contact-card__note">Our official contact number</span>
+      </a>
+
+      <a class="contact-card card" href={`mailto:${site.email}`}>
+        <span class="icon-chip" aria-hidden="true"><Icon name="mail" /></span>
+        <span class="contact-card__label label">Email</span>
+        <span class="contact-card__value contact-card__value--sm">{site.email}</span>
+        <span class="contact-card__note">We reply as soon as we can</span>
+      </a>
+
+      <div class="contact-card card">
+        <span class="icon-chip" aria-hidden="true"><Icon name="pin" /></span>
+        <span class="contact-card__label label">Location</span>
+        <span class="contact-card__value contact-card__value--sm">
+          A short walk from UNILUS
+        </span>
+        <span class="contact-card__note">Exact address shared on enquiry</span>
+      </div>
+    </div>
+
+    <div class="contact__booking">
+      <div class="contact__steps-panel">
+        <h3 class="contact__steps-heading">How booking works</h3>
+        <ol class="contact__steps">
+          {
+            steps.map((step, index) => (
+              <li class="contact__step">
+                <span class="contact__step-number" aria-hidden="true">
+                  {index + 1}
+                </span>
+                <span>{step}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <div class="contact__cta card">
+        <h3 class="contact__cta-heading">Start your enquiry</h3>
+        <p class="contact__cta-text">
+          Please share your <strong>full name</strong> and the
+          <strong>phone number linked to your WhatsApp</strong>.
+        </p>
+        <WhatsAppButton variant="booking" label="Book a room on WhatsApp" block />
+        <WhatsAppButton
+          variant="availability"
+          label="Ask about availability"
+          size="small"
+          tone="outline"
+          block
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    background: var(--color-surface-muted);
+  }
+
+  .contact__cards {
+    display: grid;
+    gap: var(--gutter);
+    margin-bottom: var(--space-7);
+  }
+
+  @media (min-width: 768px) {
+    .contact__cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .contact-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  a.contact-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+  }
+
+  .contact-card .icon-chip {
+    margin-bottom: var(--space-2);
+  }
+
+  .contact-card__label {
+    color: var(--color-text-subtle);
+  }
+
+  .contact-card__value {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .contact-card__value--sm {
+    font-size: 1.0625rem;
+    word-break: break-word;
+  }
+
+  .contact-card__note {
+    font-size: 0.875rem;
+    color: var(--color-text-soft);
+  }
+
+  .contact__booking {
+    display: grid;
+    gap: var(--gutter);
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .contact__booking {
+      grid-template-columns: 1.4fr 1fr;
+      gap: var(--space-7);
+    }
+  }
+
+  .contact__steps-heading,
+  .contact__cta-heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--space-4);
+  }
+
+  .contact__steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: 38rem;
+  }
+
+  .contact__step {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    color: var(--color-text-soft);
+    line-height: 1.6;
+  }
+
+  .contact__step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: none;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  .contact__cta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-6);
+  }
+
+  .contact__cta-text {
+    font-size: 0.9375rem;
+    color: var(--color-text-soft);
+    line-height: 1.6;
+    margin-bottom: var(--space-2);
+  }
+
+</style>

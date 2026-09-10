@@ -1,0 +1,128 @@
+---
+import SectionHeading from '../SectionHeading.astro';
+import FAQItem from '../FAQItem.astro';
+import Icon from '../Icon.astro';
+import WhatsAppButton from '../WhatsAppButton.astro';
+import { faqs } from '../../data/faq';
+import { site } from '../../data/site';
+import type { IconName } from '../icons';
+
+// Exactly the rules the client supplied — no times, no added conditions.
+const rules: { icon: IconName; title: string; text: string }[] = [
+  { icon: 'users', title: 'No boys allowed', text: 'This applies across the property.' },
+  { icon: 'clock', title: 'Curfew applies', text: 'Please be back before curfew each evening.' },
+  { icon: 'home', title: 'Visitors', text: `${site.visitorPolicy}.` },
+];
+---
+
+<section class="section section--surface" id="faq" aria-labelledby="faq-heading">
+  <div class="container">
+    <SectionHeading
+      eyebrow="FAQ & Rules"
+      title="Answers before you ask"
+      lead="The questions students ask us most often, plus the house rules everyone agrees to before moving in."
+      id="faq-heading"
+    />
+
+    <div class="faq__layout">
+      <div class="faq__list">
+        {faqs.map((item) => <FAQItem question={item.question} answer={item.answer} />)}
+      </div>
+
+      <aside class="rules card" aria-labelledby="rules-heading">
+        <div class="rules__header">
+          <span class="icon-chip icon-chip--sm" aria-hidden="true">
+            <Icon name="shield" />
+          </span>
+          <h3 id="rules-heading" class="rules__heading">House rules</h3>
+        </div>
+
+        <ul class="rules__list">
+          {
+            rules.map((rule) => (
+              <li class="rules__item">
+                <p class="rules__title">{rule.title}</p>
+                <p class="rules__text">{rule.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="rules__policy">
+          <h4 class="rules__policy-heading">Leaving early</h4>
+          <p class="rules__text">{site.earlyDeparturePolicy}</p>
+        </div>
+
+        <WhatsAppButton variant="general" label="Ask us a question" size="small" block />
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__layout {
+    display: grid;
+    gap: var(--gutter);
+    align-items: start;
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .rules {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding: var(--space-6);
+    background: var(--color-bg);
+  }
+
+  .rules__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border-soft);
+  }
+
+  .rules__heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .rules__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .rules__title {
+    font-weight: 600;
+  }
+
+  .rules__text {
+    font-size: 0.9375rem;
+    color: var(--color-text-soft);
+    line-height: 1.55;
+  }
+
+  .rules__policy {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border-soft);
+  }
+
+  .rules__policy-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-1);
+  }
+
+  @media (min-width: 1000px) {
+    .faq__layout {
+      grid-template-columns: 1.7fr 1fr;
+    }
+  }
+</style>

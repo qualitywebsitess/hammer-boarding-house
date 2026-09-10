@@ -1,0 +1,85 @@
+---
+import Photo from './Photo.astro';
+import Icon from './Icon.astro';
+import { getSlotImage, imageSlots, type ImageSlotKey } from '../data/images';
+import type { IconName } from './icons';
+
+interface Props {
+  imageSlot: ImageSlotKey;
+  title: string;
+  text: string;
+  facts?: { icon: IconName; label: string }[];
+}
+
+const { imageSlot, title, text, facts = [] } = Astro.props;
+const config = imageSlots[imageSlot];
+---
+
+<article class="room-card card">
+  <Photo
+    image={getSlotImage(imageSlot)}
+    alt={config.alt}
+    ratio={config.ratio}
+    radius="none"
+    sizes="(min-width: 960px) 40vw, 100vw"
+    class="room-card__photo"
+  />
+  <div class="room-card__body">
+    <h3>{title}</h3>
+    <p class="room-card__text">{text}</p>
+    {
+      facts.length > 0 && (
+        <ul class="room-card__facts">
+          {facts.map((fact) => (
+            <li>
+              <span class="icon-chip icon-chip--sm" aria-hidden="true">
+                <Icon name={fact.icon} />
+              </span>
+              {fact.label}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .room-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .room-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+  }
+
+  .room-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-6);
+  }
+
+  .room-card__text {
+    color: var(--color-text-soft);
+    line-height: 1.6;
+  }
+
+  .room-card__facts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .room-card__facts li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+</style>

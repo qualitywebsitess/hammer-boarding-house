@@ -1,0 +1,107 @@
+---
+import SectionHeading from '../SectionHeading.astro';
+import Photo from '../Photo.astro';
+import Icon from '../Icon.astro';
+import { getSlotImage, imageSlots } from '../../data/images';
+import type { IconName } from '../icons';
+
+const included: { icon: IconName; label: string }[] = [
+  { icon: 'wifi', label: 'Wi-Fi' },
+  { icon: 'shield', label: 'Security' },
+  { icon: 'trash', label: 'Garbage collection' },
+  { icon: 'bolt', label: 'Electricity' },
+];
+
+
+const wifiSlot = imageSlots.amenityWifi;
+---
+
+<section class="section section--muted" id="included" aria-labelledby="included-heading">
+  <div class="container included__inner">
+    <div>
+      <SectionHeading
+        eyebrow="What's Included"
+        title="Covered by your rent"
+        lead="No separate bills to chase — these are all part of what you pay."
+        id="included-heading"
+      />
+
+      <ul class="included__list">
+        {
+          included.map((item) => (
+            <li class="included__item card">
+              <span class="icon-chip icon-chip--sm" aria-hidden="true">
+                <Icon name={item.icon} />
+              </span>
+              {item.label}
+            </li>
+          ))
+        }
+      </ul>
+
+    </div>
+
+    <div class="included__media">
+      <Photo
+        image={getSlotImage('amenityWifi')}
+        alt={wifiSlot.alt}
+        ratio={wifiSlot.ratio}
+        radius="lg"
+        sizes="(min-width: 900px) 30vw, 70vw"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .included__inner {
+    display: grid;
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  .included__list {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 520px) {
+    .included__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .included__list--compact {
+    max-width: 30rem;
+  }
+
+  .included__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    font-weight: 500;
+  }
+
+  .included__item--soft {
+    background: transparent;
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+
+
+
+  .included__media {
+    max-width: 24rem;
+    width: 100%;
+    justify-self: center;
+  }
+
+  @media (min-width: 900px) {
+    .included__inner {
+      grid-template-columns: 1.6fr 1fr;
+      gap: var(--space-8);
+    }
+  }
+</style>
